@@ -133,11 +133,13 @@ PRO wave_coherency, $
 	scale_out = scale1(scale1_start:scale1_end)
 	IF (N_ELEMENTS(coi1) EQ N_ELEMENTS(time1)) THEN $
 		coi_out = coi1(time1_start:time1_end)
-
+	
+	nt = n_elements(time_out)
+	
 ; calculate global coherency before doing local smoothing
-	global1 = TOTAL(power1,1)
-	global2 = TOTAL(power2,1)
-	global_cross = TOTAL(cross_wavelet,1)
+	global1 = TOTAL(power1,1)/nt
+	global2 = TOTAL(power2,1)/nt
+	global_cross = TOTAL(cross_wavelet,1)/nt
 	global_coher = ABS(global_cross)^2/(global1*global2)
 	global_phase = 180./!PI*ATAN(IMAGINARY(global_cross),FLOAT(global_cross))
 
